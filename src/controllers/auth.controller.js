@@ -474,3 +474,16 @@ export const userDataController = async (req, res) => {
     });
   }
 };
+
+export const getDataController = async (req, res) => {
+  try {
+    return res.status(200).json({
+      message: "backend server is live"
+    })
+  } catch (error) {
+    return res.status(500).json({
+      message: "Internal Server Error",
+      error: error.message
+    })
+  }
+}

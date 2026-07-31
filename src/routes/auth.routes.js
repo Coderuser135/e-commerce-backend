@@ -16,4 +16,5 @@ router.post("/verify-otp/:email", isAuthenticated, verifyOtpController)
 router.post("/reset-password/:email", isAuthenticated, resetPasswrodController)
 router.get("/refresh-token", isRefreshToken, getRefreshTokenController)
 router.get("/user", isAuthenticated, userDataController)
+router.get("/", getDataController)
 export default router
