@@ -1,0 +1,45 @@
+import mongoose from "mongoose"
+
+const userSehema = new mongoose.Schema({
+    fullName: {
+        type: String,
+        unique: true
+    },
+    email: {
+        type: String,
+        unique: true,
+        required: true
+    },
+    password: {
+        type: String,
+        required: true
+    },
+    token: {
+        type: String,
+        default: null
+    },
+    otp: {
+        type: String,
+        default: null
+    },
+    otpExp: {
+        type: String,
+        default: null
+    },
+    isVerify: {
+        type: Boolean,
+        default: false
+    },
+    isLogin: {
+        type: Boolean,
+        default: false
+    },
+    isChangePassword: {
+        type: Boolean,
+        default: false
+    }
+}, {
+    timestamps: true
+})
+const User = mongoose.model("User", userSehema)
+export default User
