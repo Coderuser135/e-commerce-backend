@@ -31,7 +31,7 @@ export const registerController = async (req, res) => {
     // Send Gamil
     const otp = generatedOtp();
     const html = generatedHtml(otp);
-    sendMail(email, "OTP Verification", `Your OTP Code: ${otp}`, html);
+    await sendMail(email, "OTP Verification", `Your OTP Code: ${otp}`, html);
     // Register User
     const createUser = await User.create({
       fullName,
