@@ -22,7 +22,6 @@ export const registerController = async (req, res) => {
       });
     }
     const findUser = await User.findOne({ email: email });
-    console.log(findUser);
     if (findUser) {
       return res.status(400).json({
         message: "This user is already exists",

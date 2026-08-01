@@ -3,12 +3,10 @@ import dotenv from "dotenv"
 dotenv.config()
 
 export const transporter = nodemailer.createTransport({
-  host: "smtp-relay.brevo.com",
-  port: 587,
-  secure: false,
+  service: "gmail",
   auth: {
-    user: process.env.BREVO_USER,
-    pass: process.env.BREVO_PASS,
+    user: process.env.GOOGLE_USER,
+    pass: process.env.GOOGLE_PASS,
   },
 });
 
@@ -23,7 +21,7 @@ transporter.verify((error, success) => {
 export const sendMail = async (to, subject, text, html) => {
   try {
     const info = await transporter.sendMail({
-      from: `Your message: ${process.env.BREVO_USER}`,
+      from: `Your message: ${process.env.GOOGLE_USER}`,
       to,
       subject,
       text,
