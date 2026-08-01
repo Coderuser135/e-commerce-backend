@@ -1,19 +1,12 @@
 import mongoose from "mongoose";
 
 const connectDB = async () => {
-  console.log(process.env.MONGO_DB)
-  // Agar Mongoose pehle se connected hai, toh dobara connect mat karo
-  if (mongoose.connection.readyState >= 1) {
-    return;
-  }
   try {
-    await mongoose.connect(process.env.MONGO_DB, {
-      serverSelectionTimeoutMS: 5000, // 5 sec me quick timeout
-    });
+    await mongoose.connect(process.env.MONGO_DB);
     console.log("MongoDB Atlas Connected Successfully!");
   } catch (error) {
     console.log(`MongoDB url: ${process.env.MONGO_DB}`)
-    console.error("MongoDB Connection Failed:", error.message);
+    console.error("MongoDB Connection Failed:", "MongoDB:", process.env.MONGO_DB, error.message);
     throw error;
   }
 };
