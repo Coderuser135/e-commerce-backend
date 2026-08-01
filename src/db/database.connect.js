@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
 const connectDB = async () => {
+  console.log(process.env.MONGO_DB)
   // Agar Mongoose pehle se connected hai, toh dobara connect mat karo
   if (mongoose.connection.readyState >= 1) {
     return;
