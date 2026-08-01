@@ -23,3 +23,4 @@ app.listen(PORT, () => {
     dbConnect()
     console.log(`server is started port: ${PORT}`)
 })
+export default app
