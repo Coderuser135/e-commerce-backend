@@ -165,8 +165,8 @@ export const loginController = async (req, res) => {
     const refreshToken = await gerenateRefreshToken(findUser._id, "15d");
     const optionalCookie = {
       httpOnly: true,
-      secure: "",
-      strict: "sameSite",
+      secure: true,
+      strict: "none",
       maxAge: 15 * 24 * 60 * 60 * 1000,
     };
     res.cookie("refreshToken", refreshToken, optionalCookie);
