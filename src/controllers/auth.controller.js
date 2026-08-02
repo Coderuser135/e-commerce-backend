@@ -166,7 +166,7 @@ export const loginController = async (req, res) => {
     const optionalCookie = {
       httpOnly: true,
       secure: true,
-      strict: "none",
+      sameSite: "none",
       maxAge: 15 * 24 * 60 * 60 * 1000,
     };
     res.cookie("refreshToken", refreshToken, optionalCookie);
