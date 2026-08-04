@@ -31,7 +31,7 @@ export const isAuthenticated = async (req, res, next) => {
                 message: "This user is not find plees check your token"
             })
         }
-        if(authToken !== findUser.token){
+        if(authToken === findUser.token){
             return res.status(400).json({
                 message: "Plese check your token"
             })

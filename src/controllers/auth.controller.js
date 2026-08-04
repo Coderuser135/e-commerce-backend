@@ -423,11 +423,11 @@ export const getRefreshTokenController = async (req, res) => {
     return res.status(200).json({
       message: "gerenated asses token",
       data: {
-        fullName: updateaccessToken.fullName,
-        email: updateaccessToken.email,
-        assessToken: updateaccessToken.token,
-        isLogin: updateaccessToken.isLogin,
-        isVerify: updateaccessToken.isVerify,
+        fullName: findUser.fullName,
+        email: findUser.email,
+        assessToken: assesToken,
+        isLogin: findUser.isLogin,
+        isVerify: findUser.isVerify,
       },
     });
   } catch (error) {
