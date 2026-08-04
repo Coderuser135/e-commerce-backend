@@ -161,7 +161,7 @@ export const loginController = async (req, res) => {
         message: "Check your passwrod your password is wrong",
       });
     }
-    const assesToken = await gerenateaccessToken(findUser._id, "20d");
+    const accessToken = await gerenateaccessToken(findUser._id, "20d");
     const refreshToken = await gerenateRefreshToken(findUser._id, "15d");
     const optionalCookie = {
       httpOnly: true,
@@ -183,7 +183,7 @@ export const loginController = async (req, res) => {
       data: {
         fullName: updateUser.fullName,
         email: updateUser.email,
-        accessToken: updateUser.token,
+        accessToken: accessToken,
         isVerify: updateUser.isVerify,
         isLogin: updateUser.isLogin,
       },
