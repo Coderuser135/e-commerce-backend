@@ -214,7 +214,7 @@ export const logoutController = async (req, res) => {
     res.clearCookie("refreshToken", {
       httpOnly: true,
       secure: true,
-      sameSite: "sctict"
+      sameSite: "none"
     });
     const updateUser = await User.findByIdAndUpdate(
       findUser._id,
