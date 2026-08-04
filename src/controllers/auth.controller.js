@@ -425,7 +425,7 @@ export const getRefreshTokenController = async (req, res) => {
       data: {
         fullName: findUser.fullName,
         email: findUser.email,
-        assessToken: assesToken,
+        assessToken: accessToken,
         isLogin: findUser.isLogin,
         isVerify: findUser.isVerify,
       },
