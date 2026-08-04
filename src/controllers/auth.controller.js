@@ -166,7 +166,7 @@ export const loginController = async (req, res) => {
     const optionalCookie = {
       httpOnly: true,
       secure: true,
-      sameSite: "none",
+      sameSite: "lax",
       maxAge: 15 * 24 * 60 * 60 * 1000,
     };
     res.cookie("refreshToken", refreshToken, optionalCookie);
@@ -214,7 +214,7 @@ export const logoutController = async (req, res) => {
     res.clearCookie("refreshToken", {
       httpOnly: true,
       secure: true,
-      sameSite: "none"
+      sameSite: "lax"
     });
     const updateUser = await User.findByIdAndUpdate(
       findUser._id,
