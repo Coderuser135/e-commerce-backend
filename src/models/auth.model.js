@@ -14,7 +14,7 @@ const userSehema = new mongoose.Schema({
         type: String,
         required: true
     },
-    token: {
+    refreshToken: {
         type: String,
         default: null
     },

@@ -4,7 +4,7 @@ import { generatedHtml, generatedOtp } from "../utils/gmail.util.js";
 import { sendMail } from "../services/email.service.js";
 import OTP from "../models/authOtp.model.js";
 import {
-  gerenateAssesToken,
+  gerenateaccessToken,
   gerenateRefreshToken,
 } from "../utils/token.util.js";
 
@@ -161,7 +161,7 @@ export const loginController = async (req, res) => {
         message: "Check your passwrod your password is wrong",
       });
     }
-    const assesToken = await gerenateAssesToken(findUser._id, "20d");
+    const assesToken = await gerenateaccessToken(findUser._id, "20d");
     const refreshToken = await gerenateRefreshToken(findUser._id, "15d");
     const optionalCookie = {
       httpOnly: true,
@@ -173,7 +173,7 @@ export const loginController = async (req, res) => {
     const updateUser = await User.findByIdAndUpdate(
       findUser._id,
       {
-        token: assesToken,
+        refreshToken: refreshToken,
         isLogin: true,
       },
       { new: true },
@@ -183,7 +183,7 @@ export const loginController = async (req, res) => {
       data: {
         fullName: updateUser.fullName,
         email: updateUser.email,
-        token: updateUser.token,
+        accessToken: updateUser.token,
         isVerify: updateUser.isVerify,
         isLogin: updateUser.isLogin,
       },
@@ -419,23 +419,15 @@ export const getRefreshTokenController = async (req, res) => {
         message: "check your refresh token and provided valid refresh token",
       });
     }
-    const assesToken = await gerenateAssesToken(findUser._id, "20d");
-    const updateAssesToken = await User.findByIdAndUpdate(
-      { _id: findUser._id },
-      {
-        token: assesToken,
-      },
-      { new: true },
-    );
-    console.log(updateAssesToken)
+    const accessToken = await gerenateaccessToken(findUser._id, "20d");
     return res.status(200).json({
       message: "gerenated asses token",
       data: {
-        fullName: updateAssesToken.fullName,
-        email: updateAssesToken.email,
-        assesToken: updateAssesToken.token,
-        isLogin: updateAssesToken.isLogin,
-        isVerify: updateAssesToken.isVerify,
+        fullName: updateaccessToken.fullName,
+        email: updateaccessToken.email,
+        assessToken: updateaccessToken.token,
+        isLogin: updateaccessToken.isLogin,
+        isVerify: updateaccessToken.isVerify,
       },
     });
   } catch (error) {
