@@ -100,7 +100,7 @@ export const emailVerifyController = async (req, res) => {
     const verifyOtp = await bcrypt.compare(otp, findOtp.otp);
     if (!verifyOtp) {
       return res.status(400).json({
-        message: "This otp is wrong otp plese check your otp",
+        message: "Wrong OTP fill your email OTP",
       });
     }
     if (Date.now() > findOtp.otpExp) {
