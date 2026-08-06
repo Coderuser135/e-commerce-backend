@@ -12,8 +12,8 @@ router.get("/logout", isRefreshToken, logoutController)
 router.post("/email-otp", emailOtpController)
 
 // isChangePassword controller
-router.post("/verify-otp/:email", isAuthenticated, verifyOtpController)
-router.post("/reset-password/:email", isAuthenticated, resetPasswrodController)
+router.post("/verify-otp/:email",  verifyOtpController)
+router.post("/reset-password/:email", resetPasswrodController)
 router.get("/refresh-token", isRefreshToken, getRefreshTokenController)
 router.get("/user", isAuthenticated, userDataController)
 router.get("/", getDataController)

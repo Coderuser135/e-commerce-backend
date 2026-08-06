@@ -158,7 +158,7 @@ export const loginController = async (req, res) => {
     const verifyEmail = await bcrypt.compare(password, findUser.password);
     if (!verifyEmail) {
       return res.status(400).json({
-        message: "Check your passwrod your password is wrong",
+        message: "Incorrect Password",
       });
     }
     const accessToken = await gerenateaccessToken(findUser._id, "20d");
