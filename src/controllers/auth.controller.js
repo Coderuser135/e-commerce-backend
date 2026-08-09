@@ -217,6 +217,7 @@ export const loginController = async (req, res) => {
         accessToken: accessToken,
         isVerify: updateUser.isVerify,
         isLogin: updateUser.isLogin,
+        role: updateUser.role
       },
     });
   } catch (error) {
@@ -459,6 +460,7 @@ export const getRefreshTokenController = async (req, res) => {
         accessToken: accessToken,
         isLogin: findUser.isLogin,
         isVerify: findUser.isVerify,
+        role: findUser.role
       },
     });
   } catch (error) {
@@ -486,23 +488,11 @@ export const userDataController = async (req, res) => {
         token: findUserData.token,
         isLogin: findUserData.isLogin,
         isVerify: findUserData.isVerify,
+        role: findUserData.role
       },
     });
   } catch (error) {
     console.log(`getUserDataController routes error: ${error.message}`);
-    return res.status(500).json({
-      message: "Internal Server Error",
-      error: error.message,
-    });
-  }
-};
-
-export const getDataController = async (req, res) => {
-  try {
-    return res.status(200).json({
-      message: "backend server is live",
-    });
-  } catch (error) {
     return res.status(500).json({
       message: "Internal Server Error",
       error: error.message,

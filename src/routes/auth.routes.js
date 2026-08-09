@@ -1,5 +1,5 @@
 import express from "express"
-import { emailOtpController, emailVerifyController, getDataController, getRefreshTokenController, getUserDataController, loginController, logoutController, registerController, resetPasswrodController, userDataController, verifyOtpController } from "../controllers/auth.controller.js"
+import { emailOtpController, emailVerifyController, getRefreshTokenController, getUserDataController, loginController, logoutController, registerController, resetPasswrodController, userDataController, verifyOtpController } from "../controllers/auth.controller.js"
 import { isAuthenticated, isRefreshToken } from "../middlewares/auth.middleware.js"
 
 const router = express.Router()
@@ -16,5 +16,4 @@ router.post("/verify-otp/:email",  verifyOtpController)
 router.post("/reset-password/:email", resetPasswrodController)
 router.get("/refresh-token", isRefreshToken, getRefreshTokenController)
 router.get("/user", isAuthenticated, userDataController)
-router.get("/", getDataController)
 export default router
