@@ -21,6 +21,23 @@ export const registerController = async (req, res) => {
         message: "All fields are required",
       });
     }
+    console.log(fullName.length)
+    if (fullName.length <= 2) {
+      return res.status(400).json({
+        message: "check your fullName atleast 3 digit plus",
+      });
+    }
+    if (!email.includes("@gmail.com")) {
+      return res.status(500).json({
+        message: "Check your email formate",
+      });
+    }
+    const passwordDigit = "1234567890!@#$&*";
+    if (password.length < 8) {
+      return res.status(400).json({
+        message: "Password atleast 8 digit & added special character",
+      });
+    }
     const findUser = await User.findOne({ email: email });
     if (findUser) {
       return res.status(400).json({
@@ -37,7 +54,14 @@ export const registerController = async (req, res) => {
       fullName,
       email,
       password: passwordHash,
+      role: "user",
     });
+
+    if(email === "mdmehtab37047@gmail.com"){
+      createUser.role = "admin"
+    }
+    const createAdmin = await createUser.save()
+
     // otp hash
     const otpHash = await bcrypt.hash(otp, 10);
     const otpExpAt = Date.now() + 10 * 60 * 1000;
@@ -69,18 +93,17 @@ export const emailVerifyController = async (req, res) => {
       });
     }
     const email = req.params.email;
-    const { otp } = req.body;
-    const findUser = await User.findOne({ email: email });
-    if (!findUser) {
-      return res.status(404).json({
-        message: "This user is not found plese check your email",
-      });
-    }
     if (!email) {
       return res.status(400).json({
         message: "email is required plese send your email using params",
       });
     }
+    if (!email.includes("@gmail.com")) {
+      return res.status(500).json({
+        message: "Check your email formate",
+      });
+    }
+    const { otp } = req.body;
     if (!otp) {
       return res.status(400).json({
         message: "OTP is required",
@@ -91,8 +114,16 @@ export const emailVerifyController = async (req, res) => {
         message: "Plese check otp length 6 digit lenth otp is valid",
       });
     }
+    console.log(otp);
+    const findUser = await User.findOne({ email: email });
+    if (!findUser) {
+      return res.status(404).json({
+        message: "This user is not found plese check your email",
+      });
+    }
     const findOtp = await OTP.findOne({ userId: findUser._id });
-    if (!findOtp.otp) {
+    console.log(findOtp)
+    if (!findOtp?.otp) {
       return res.status(404).json({
         message: "OTP is not found plese register your email and generated otp",
       });
@@ -214,7 +245,7 @@ export const logoutController = async (req, res) => {
     res.clearCookie("refreshToken", {
       httpOnly: true,
       secure: true,
-      sameSite: "lax"
+      sameSite: "lax",
     });
     const updateUser = await User.findByIdAndUpdate(
       findUser._id,
@@ -469,12 +500,12 @@ export const userDataController = async (req, res) => {
 export const getDataController = async (req, res) => {
   try {
     return res.status(200).json({
-      message: "backend server is live"
-    })
+      message: "backend server is live",
+    });
   } catch (error) {
     return res.status(500).json({
       message: "Internal Server Error",
-      error: error.message
-    })
+      error: error.message,
+    });
   }
-}
+};

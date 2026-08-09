@@ -18,7 +18,7 @@ const orderSchema = new mongoose.Schema(
       min: [1, "max 1 order is required"],
     },
     totalPrice: {
-      type: String,
+      type: Number,
       required: true,
     },
     // order schema

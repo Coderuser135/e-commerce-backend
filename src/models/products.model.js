@@ -14,11 +14,11 @@ const productsSchema = new mongoose.Schema({
         required: true
     },
     orginalPrice: {
-        type: String,
+        type: Number,
         required: true
     },
     discountPrice: {
-        type: String,
+        type: Number,
         required: true
     },
     image: {

@@ -3,7 +3,7 @@ import mongoose from "mongoose"
 const userSehema = new mongoose.Schema({
     fullName: {
         type: String,
-        unique: true
+        required: true
     },
     email: {
         type: String,
@@ -19,7 +19,7 @@ const userSehema = new mongoose.Schema({
         default: null
     },
     otp: {
-        type: String,
+        type: Number,
         default: null
     },
     otpExp: {
@@ -37,6 +37,10 @@ const userSehema = new mongoose.Schema({
     isChangePassword: {
         type: Boolean,
         default: false
+    },
+    role: {
+        type: String,
+        default: "user"
     }
 }, {
     timestamps: true
