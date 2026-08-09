@@ -251,7 +251,7 @@ export const logoutController = async (req, res) => {
       findUser._id,
       {
         isLogin: false,
-        token: null,
+        refreshToken: null,
       },
       { new: true },
     );
