@@ -41,6 +41,10 @@ const userSehema = new mongoose.Schema({
     role: {
         type: String,
         default: "user"
+    },
+    userImage: {
+        type: String,
+        default: null
     }
 }, {
     timestamps: true

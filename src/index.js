@@ -5,6 +5,7 @@ import cors from "cors"
 import cookieParser from "cookie-parser"
 import productsRouter from "./routes/products.routes.js"
 import orderRouter from "./routes/order.routes.js"
+import userRouter from "./routes/user.routes.js"
 import connectDB from "./db/database.connect.js"
 dotenv.config()
 
@@ -27,6 +28,7 @@ app.use(cors({
 app.use("/api/auth", authRouter)
 app.use("/api/products", productsRouter)
 app.use("/api/order", orderRouter)
+app.use("/api/user", userRouter)
 app.listen(PORT, () => {
     console.log(`server is started port: ${PORT}`)
 })

@@ -217,7 +217,8 @@ export const loginController = async (req, res) => {
         accessToken: accessToken,
         isVerify: updateUser.isVerify,
         isLogin: updateUser.isLogin,
-        role: updateUser.role
+        role: updateUser.role,
+        userImage: updateUser.userImage
       },
     });
   } catch (error) {
@@ -460,7 +461,8 @@ export const getRefreshTokenController = async (req, res) => {
         accessToken: accessToken,
         isLogin: findUser.isLogin,
         isVerify: findUser.isVerify,
-        role: findUser.role
+        role: findUser.role,
+        userImage: findUser.userImage
       },
     });
   } catch (error) {

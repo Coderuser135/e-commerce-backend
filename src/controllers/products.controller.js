@@ -11,8 +11,9 @@ export const createProductsController = async (req, res) => {
         message: "Create order fields is not provided plese order fields are provided"
       })
     }
-    const { title, description, orginalPrice, discountPrice, category } =
-    req.body;
+    const inputData = req.body.inputData
+    const parseData = JSON.parse(inputData)
+     const { title, description, orginalPrice, discountPrice, category, rating } = parseData
     const filePath = req.file?.path
     if(!req.file){
       return res.status(400).json({
@@ -22,13 +23,13 @@ export const createProductsController = async (req, res) => {
     if (
       !title ||
       !description ||
-      !orginalPrice ||
       !discountPrice ||
       !orginalPrice ||
-      !category
+      !category ||
+      !rating
     ) {
       return res.status(400).json({
-        message: "All fields are required",
+        message: "All fields are required data",
       });
     }
     const imageUpload = await cloudinary.uploader.upload(filePath, {
@@ -43,7 +44,8 @@ export const createProductsController = async (req, res) => {
       discountPrice,
       orginalPrice,
       category,
-      image
+      image,
+      rating
     });
     return res.status(201).json({
       message: "Products is created",
@@ -59,10 +61,8 @@ export const createProductsController = async (req, res) => {
 
 export const getAllProductsController = async (req, res) => {
   try {
-    const findProducts = await Products.find({});
-    return res.status(200).json({
-      findProducts,
-    });
+    const findProducts = await Products.find({}).select('-createdAt').select('-updatedAt');
+    return res.status(200).json(findProducts);
   } catch (error) {
     console.log(`getAllProducts routes error: ${error.message}`);
     return res.status(500).json({
@@ -91,9 +91,7 @@ export const getSingleProductsController = async (req, res) => {
         message: "This products is not found plese check your products id",
       });
     }
-    return res.status(200).json({
-      findSingleProducts,
-    });
+    return res.status(200).json(findSingleProducts);
   } catch (error) {
     console.log(`getSingleProductsController routes error: ${error.message}`);
     return res.status(500).json({
@@ -105,7 +103,10 @@ export const getSingleProductsController = async (req, res) => {
 export const updateProductsController = async (req, res) => {
   try {
     const id = req.params.id;
-    if (!req.body) {
+    console.log(req.body)
+    const parseData = JSON.parse(req.body.inputData)
+     const { title, description, orginalPrice, discountPrice, category, rating } = parseData
+    if (!parseData) {
       return res.status(400).json({
         message: "You not send data plese send data and update your data",
       });
@@ -127,9 +128,7 @@ export const updateProductsController = async (req, res) => {
         message: "Products Data is not found plese check your products id",
       });
     }
-    const updateProdutsData = await Products.findByIdAndUpdate(id, req.body, {
-      new: true,
-    });
+    const updateProdutsData = await Products.findByIdAndUpdate(id, parseData, {new: true});
     return res.status(200).json({
       message: "Your Products data is updated",
       updateProdutsData,
