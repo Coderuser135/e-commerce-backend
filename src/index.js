@@ -22,7 +22,7 @@ app.use(async (req, res, next) => {
 });
 app.use(cookieParser())
 app.use(cors({
-    origin: ["https://ecommercestoredata.netlify.app", "http://localhost:5173", "https://ecommercestoresite.netlify.app"],
+    origin: ["https://ecommercestoredata.netlify.app", "http://localhost:5173", "https://ecommercesitedata.netlify.app"],
     credentials: true
 }))
 app.use("/api/auth", authRouter)
