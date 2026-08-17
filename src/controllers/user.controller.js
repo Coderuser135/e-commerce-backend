@@ -1,4 +1,3 @@
-import { cloudinary } from "../configs/cloudinary.config.js";
 import User from "../models/auth.model.js";
 import fs from "fs";
 import bcrypt from "bcryptjs";
