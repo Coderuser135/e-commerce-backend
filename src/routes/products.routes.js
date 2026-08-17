@@ -8,7 +8,7 @@ const router = express.Router()
 router.get("/", isAuthenticated, getAllProductsController)
 router.get("/:id", isAuthenticated, getSingleProductsController)
 router.post("/", isAuthenticated, isAdmin, upload.single("image"), createProductsController)
-router.put("/:id", isAuthenticated, isAdmin, updateProductsController)
+router.put("/:id", isAuthenticated, isAdmin, upload.single("image"), updateProductsController)
 router.delete("/:id", isAuthenticated, isAdmin, deleteProductsController)
 
 export default router

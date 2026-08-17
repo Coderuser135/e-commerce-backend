@@ -1,24 +1,32 @@
 import Products from "../models/products.model.js";
 import path from "path";
-import cloudinary from "../configs/cloudinary.config.js"
-import upload from "../middlewares/multer.middleware.js"
-import fs from "fs"
+import cloudinary from "../configs/cloudinary.config.js";
+import upload from "../middlewares/multer.middleware.js";
+import fs from "fs";
 import { uploadToCloudinary } from "../utils/cloudinaryUpload.utils.js";
 
 export const createProductsController = async (req, res) => {
   try {
-    if(!req.body){
+    if (!req.body) {
       return res.status(400).json({
-        message: "Create order fields is not provided plese order fields are provided"
-      })
+        message:
+          "Create order fields is not provided plese order fields are provided",
+      });
     }
-    const inputData = req.body.inputData
-    const parseData = JSON.parse(inputData)
-     const { title, description, orginalPrice, discountPrice, category, rating } = parseData
-    if(!req.file){
+    const inputData = req.body.inputData;
+    const parseData = JSON.parse(inputData);
+    const {
+      title,
+      description,
+      orginalPrice,
+      discountPrice,
+      category,
+      rating,
+    } = parseData;
+    if (!req.file) {
       return res.status(400).json({
-        message: "image file is not provide plese image file provided"
-      })
+        message: "image file is not provide plese image file provided",
+      });
     }
     if (
       !title ||
@@ -32,8 +40,11 @@ export const createProductsController = async (req, res) => {
         message: "All fields are required data",
       });
     }
-    const imageUpload = await uploadToCloudinary(req.file?.buffer, "E-Commerce Store Image Data")
-    const image = imageUpload.secure_url
+    const imageUpload = await uploadToCloudinary(
+      req.file?.buffer,
+      "E-Commerce Store Image Data",
+    );
+    const image = imageUpload.secure_url;
     const createProducts = await Products.create({
       title,
       description,
@@ -41,7 +52,7 @@ export const createProductsController = async (req, res) => {
       orginalPrice,
       category,
       image,
-      rating
+      rating,
     });
     return res.status(201).json({
       message: "Products is created",
@@ -57,7 +68,9 @@ export const createProductsController = async (req, res) => {
 
 export const getAllProductsController = async (req, res) => {
   try {
-    const findProducts = await Products.find({}).select('-createdAt').select('-updatedAt');
+    const findProducts = await Products.find({})
+      .select("-createdAt")
+      .select("-updatedAt");
     return res.status(200).json(findProducts);
   } catch (error) {
     console.log(`getAllProducts routes error: ${error.message}`);
@@ -99,16 +112,18 @@ export const getSingleProductsController = async (req, res) => {
 export const updateProductsController = async (req, res) => {
   try {
     const id = req.params.id;
-    const parseData = JSON.parse(req.body.inputData)
-     const { title, description, orginalPrice, discountPrice, category, rating } = parseData
+    const parseData = JSON.parse(req.body.inputData);
+    const {
+      title,
+      description,
+      orginalPrice,
+      discountPrice,
+      category,
+      rating,
+    } = parseData;
     if (!parseData) {
       return res.status(400).json({
         message: "You not send data plese send data and update your data",
-      });
-    }
-    if (id.length > 16 || id.length < 16) {
-      return res.status(400).json({
-        message: "Your id is wrong plese 24 digit id provided",
       });
     }
     if (!id) {
@@ -123,7 +138,24 @@ export const updateProductsController = async (req, res) => {
         message: "Products Data is not found plese check your products id",
       });
     }
-    const updateProdutsData = await Products.findByIdAndUpdate(id, parseData, {new: true});
+    const updateImage = await uploadToCloudinary(
+      req.file?.buffer,
+      "E-Commerce Store Imag",
+    );
+    const updateProductImage = updateImage.secure_url;
+    const updateProdutsData = await Products.findByIdAndUpdate(
+      id,
+      {
+        title: parseData.title,
+        description: parseData.description,
+        discountPrice: parseData.discountPrice,
+        orginalPrice: parseData.orginalPrice,
+        category: parseData.category,
+        image: updateProductImage,
+        rating: parseData.rating,
+      },
+      { new: true },
+    );
     return res.status(200).json({
       message: "Your Products data is updated",
       updateProdutsData,
