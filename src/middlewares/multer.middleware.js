@@ -1,19 +1,11 @@
 import multer from "multer"
 
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        console.log(file)
-        cb(null, "src/uploads")
-    },
-    filename: (req, file, cb) => {
-        const uniqueSuffix = Date.now()
-        const randomNumber = Math.floor(100 + Math.random()* 99).toString()
-        const suffix = uniqueSuffix + randomNumber
-        cb(null, suffix + "-" + file.originalname)
-    }
-})
+const storage = multer.memoryStorage()
 
 const upload = multer({
-    storage
+    storage,
+    limits: {
+        fileSize: 5 * 1024 * 1024
+    }
 })
 export default upload

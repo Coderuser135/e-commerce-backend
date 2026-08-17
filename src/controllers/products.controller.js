@@ -3,6 +3,7 @@ import path from "path";
 import cloudinary from "../configs/cloudinary.config.js"
 import upload from "../middlewares/multer.middleware.js"
 import fs from "fs"
+import { uploadToCloudinary } from "../utils/cloudinaryUpload.utils.js";
 
 export const createProductsController = async (req, res) => {
   try {
@@ -14,7 +15,6 @@ export const createProductsController = async (req, res) => {
     const inputData = req.body.inputData
     const parseData = JSON.parse(inputData)
      const { title, description, orginalPrice, discountPrice, category, rating } = parseData
-    const filePath = req.file?.path
     if(!req.file){
       return res.status(400).json({
         message: "image file is not provide plese image file provided"
@@ -32,11 +32,7 @@ export const createProductsController = async (req, res) => {
         message: "All fields are required data",
       });
     }
-    const imageUpload = await cloudinary.uploader.upload(filePath, {
-      folder: "E-Commerce Store Image"
-    })
-    // delete image folder file
-    fs.unlinkSync(filePath)
+    const imageUpload = await uploadToCloudinary(req.file?.buffer, "E-Commerce Store Image Data")
     const image = imageUpload.secure_url
     const createProducts = await Products.create({
       title,
@@ -103,7 +99,6 @@ export const getSingleProductsController = async (req, res) => {
 export const updateProductsController = async (req, res) => {
   try {
     const id = req.params.id;
-    console.log(req.body)
     const parseData = JSON.parse(req.body.inputData)
      const { title, description, orginalPrice, discountPrice, category, rating } = parseData
     if (!parseData) {

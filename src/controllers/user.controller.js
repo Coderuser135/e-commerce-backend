@@ -1,17 +1,14 @@
-import cloudinary from "../configs/cloudinary.config.js";
+import { cloudinary } from "../configs/cloudinary.config.js";
 import User from "../models/auth.model.js";
 import fs from "fs";
 import bcrypt from "bcryptjs";
+import { uploadToCloudinary } from "../utils/cloudinaryUpload.utils.js";
 
 export const updateUserInfoController = async (req, res) => {
   try {
     const fullName = req.body.fullName;
-    const imageUrl = req.file.path;
     const email = req.params.email;
-    const uploadUserImage = await cloudinary.uploader.upload(imageUrl, {
-      folder: "E-Commere-Store UserImage",
-    });
-    fs.unlinkSync(imageUrl);
+    const uploadUserImage = await uploadToCloudinary(req.file?.buffer, "E-Commerce Store User Image");
     const findUser = await User.findOne({ email: email });
     if (!findUser) {
       return res.status(400).json({
