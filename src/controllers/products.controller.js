@@ -94,7 +94,6 @@ export const getSingleProductsController = async (req, res) => {
       });
     }
     const findSingleProducts = await Products.findById(id);
-    console.log(findSingleProducts);
     if (!findSingleProducts) {
       return res.status(404).json({
         message: "This products is not found plese check your products id",
@@ -184,7 +183,6 @@ export const deleteProductsController = async (req, res) => {
       });
     }
     const findProducts = await Products.findById(id);
-    console.log(`findProducts: ${findProducts}`);
     if (!findProducts) {
       return res.status(404).json({
         message: "This products is not found plese check your products id",

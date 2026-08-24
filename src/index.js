@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser"
 import productsRouter from "./routes/products.routes.js"
 import orderRouter from "./routes/order.routes.js"
 import userRouter from "./routes/user.routes.js"
+import addToCardRouter from "./routes/addToCard.routes.js"
 import connectDB from "./db/database.connect.js"
 dotenv.config()
 
@@ -29,6 +30,7 @@ app.use("/api/auth", authRouter)
 app.use("/api/products", productsRouter)
 app.use("/api/order", orderRouter)
 app.use("/api/user", userRouter)
+app.use("/api/addToCard", addToCardRouter)
 app.listen(PORT, () => {
     console.log(`server is started port: ${PORT}`)
 })

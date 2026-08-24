@@ -8,29 +8,12 @@ export const createOrderController = async (req, res) => {
       });
     }
     const {
-      productId,
       name,
-      quantity,
-      totalPrice,
       shippingAddress,
-      paymentId,
-      isDelivered,
-      orderStatus,
     } = req.body;
-    const productsArray = {
-      1: "one",
-      2: "two",
-    };
-    const shippingAddressLength = Object.keys(shippingAddress)?.length
     if (
-      !productId ||
       !name ||
-      !quantity ||
-      !totalPrice ||
-      Object.keys(shippingAddress)?.length !== 4 ||
-      !paymentId ||
-      !isDelivered ||
-      !orderStatus
+      Object.keys(shippingAddress)?.length !== 4 
     ) {
       return res.status(400).json({
         message: "Order from are all fields are required",

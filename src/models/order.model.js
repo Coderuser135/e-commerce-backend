@@ -36,18 +36,14 @@ const orderSchema = new mongoose.Schema(
         type: String,
         required: true,
       },
-      postalCode: {
-        type: String,
-        required: true,
+      pinCode: {
+        type: Number,
+        required: true
       },
       country: {
         type: String,
-        required: true,
-      },
-    },
-    paymentId: {
-      type: String,
-      required: true,
+        required: true
+      }
     },
     isDelivered: {
       type: Boolean,
