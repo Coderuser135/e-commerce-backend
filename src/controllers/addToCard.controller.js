@@ -146,7 +146,7 @@ export const addToCardDecreaseQuentityController = async (req, res) => {
       findAddToCard.quentity -= 1
       await findAddToCard.save()
       return res.status(200).json({
-        message: "item quentity is decreased"
+        message: "item quentity is decerease"
       })
     return res.status(200).json(findAddToCard)
   } catch (error) {
